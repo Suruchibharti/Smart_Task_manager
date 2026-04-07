@@ -1,9 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Provider } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
+import { store } from '@/store/authStore'
 import { ProtectedRoute, PublicRoute } from '@/components/auth/ProtectedRoute'
 import { LoginPage }             from '@/pages/LoginPage'
 import { RegisterPage }          from '@/pages/RegisterPage'
+import { ForgotPasswordPage }    from '@/pages/ForgotPasswordPage'
+import { ResetPasswordPage }     from '@/pages/ResetPasswordPage'
 import { DashboardPage }         from '@/pages/DashboardPage'
 import { ProjectPage }           from '@/pages/ProjectPage'
 import { AcceptInvitationPage }  from '@/pages/AcceptInvitationPage'
@@ -20,37 +24,41 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          {/* Public-only routes — authenticated users bounced to dashboard */}
-          <Route element={<PublicRoute />}>
-            <Route path="/login"    element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Route>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+          
+            <Route element={<PublicRoute />}>
+              <Route path="/login"    element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+            </Route>
 
-          {/* Always-public (no auth required or redirect) */}
-          <Route path="/invitations/accept" element={<AcceptInvitationPage />} />
+           
+            <Route path="/invitations/accept" element={<AcceptInvitationPage />} />
 
-          {/* Protected routes (require JWT) */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/"                          element={<DashboardPage />} />
-            <Route path="/projects/:projectId"       element={<ProjectPage />} />
-          </Route>
+           
+            <Route element={<ProtectedRoute />}>
+              <Route path="/"                          element={<DashboardPage />} />
+              <Route path="/projects/:projectId"       element={<ProjectPage />} />
+            </Route>
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+           
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
 
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          className: 'text-sm font-medium',
-          success: { iconTheme: { primary: '#6366f1', secondary: '#fff' } },
-          duration: 3500,
-        }}
-      />
-    </QueryClientProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            className: 'text-sm font-medium',
+            success: { iconTheme: { primary: '#6366f1', secondary: '#fff' } },
+            duration: 3500,
+          }}
+        />
+      </QueryClientProvider>
+    </Provider>
   )
 }

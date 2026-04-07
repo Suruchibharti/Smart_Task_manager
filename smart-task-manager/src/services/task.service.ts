@@ -26,9 +26,6 @@ export interface TaskResponse {
   updatedAt: Date;
 }
 
-/**
- * Hydrate assignee sub-docs into flat User[] matching frontend Task type
- */
 async function buildAssigneeResponses(assignees: any[]): Promise<AssigneeResponse[]> {
   if (!assignees || assignees.length === 0) {
     return [];
@@ -209,11 +206,8 @@ export async function changeStatus(
 
   const response = await toTaskResponse(task);
   publishTaskEvent(projectId, WS_EVENTS.TASK_STATUS_CHANGED, { taskId, oldStatus, newStatus: data.status });
-  logActivity(projectId, userId, 'TASK_STATUS_CHANGED', 'TASK', task._id.toString(), {
-    title: task.title,
-    from: oldStatus,
-    to: data.status,
-  });
+  logActivity(projectId, userId, 'TASK_STATUS_CHANGED', 'TASK', task._id.toString(),
+  { title: task.title, before: oldStatus, after: data.status });
 
   return response;
 }

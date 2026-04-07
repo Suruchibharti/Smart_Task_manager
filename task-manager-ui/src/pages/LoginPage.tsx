@@ -31,11 +31,14 @@ export function LoginPage() {
       toast.success(`Welcome back, ${data.user.name.split(' ')[0]}!`)
       navigate('/')
     },
+    onError: () => {
+      toast.error('Incorrect email or password')
+    },
   })
 
   return (
     <div className="flex min-h-screen">
-      {/* Left panel */}
+     
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-gradient-to-br from-primary-900 via-primary-800 to-primary-600 p-12">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
@@ -61,7 +64,7 @@ export function LoginPage() {
         </div>
       </div>
 
-      {/* Right panel */}
+     
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 bg-white">
         <div className="w-full max-w-sm">
           <div className="lg:hidden flex items-center gap-2 mb-8">
@@ -80,7 +83,7 @@ export function LoginPage() {
           <form className="mt-8 space-y-5" onSubmit={handleSubmit((v) => mutation.mutate(v))}>
             <Input
               label="Email"
-              type="email"
+              type="text"
               autoComplete="email"
               placeholder="you@example.com"
               icon={<Mail className="h-4 w-4" />}
@@ -96,6 +99,11 @@ export function LoginPage() {
               error={errors.password?.message}
               {...register('password')}
             />
+            <div className="-mt-2 text-right">
+              <Link to="/forgot-password" className="text-sm font-medium text-primary-600 hover:text-primary-700">
+                Forgot password?
+              </Link>
+            </div>
             <Button type="submit" className="w-full" size="lg" loading={mutation.isPending}>
               Sign in
             </Button>

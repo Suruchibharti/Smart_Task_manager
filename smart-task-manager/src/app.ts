@@ -24,7 +24,6 @@ app.use((req: Request, res: Response): void => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
-// Global error handler (4 params required by Express)
 app.use(errorHandler);
 
 export default app;
