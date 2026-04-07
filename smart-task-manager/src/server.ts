@@ -10,11 +10,10 @@ async function start(): Promise<void> {
   const httpServer = http.createServer(app);
   initSocket(httpServer);
 
- const PORT = process.env.PORT || env.port || 8080;
-
- httpServer.listen(PORT, () => {
-  console.log(`[Server] Running on port ${PORT}`);
-});
+  httpServer.listen(env.port, () => {
+    console.log(`[Server] SmartTask API running on port ${env.port} (${env.nodeEnv})`);
+  });
+}
 
 start().catch((err) => {
   console.error('[Server] Fatal startup error:', err);
