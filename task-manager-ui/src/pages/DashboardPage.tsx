@@ -191,10 +191,10 @@ export function DashboardPage() {
 
       
       {projects.length > 0 && (
-        <div className="flex items-center gap-4">
-          <Input placeholder="Search projects…" icon={<Search className="h-4 w-4" />}
+       <div className="flex gap-4 items-stretch">
+          <Input placeholder="Search projects…" icon={<Search  className="max-w-xs h-10" />}
             value={search} onChange={(e) => setSearch(e.target.value)} className="max-w-xs" />
-          <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-48">
+          <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)}  className="w-48 h-10">
             <option value="date-desc">Date: Latest first</option>
             <option value="date-asc">Date: Oldest first</option>
             <option value="name-asc">Name: A-Z</option>
