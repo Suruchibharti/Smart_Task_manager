@@ -192,26 +192,28 @@ export function DashboardPage() {
       
      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
   
-  <Input 
-    placeholder="Search projects…" 
-    icon={<Search className="h-4 w-4" />}
-    value={search} 
-    onChange={(e) => setSearch(e.target.value)} 
-    className="w-full sm:max-w-xs"
-  />
+  {projects.length > 0 && (
+  <div className="flex items-center gap-4">
+    <Input 
+      placeholder="Search projects…" 
+      icon={<Search className="h-4 w-4" />}
+      value={search} 
+      onChange={(e) => setSearch(e.target.value)} 
+      className="max-w-xs" 
+    />
 
-  <Select 
-    value={sortBy} 
-    onChange={(e) => setSortBy(e.target.value)} 
-    className="w-full sm:w-56"
-  >
-    <option value="date-desc">Date: Latest first</option>
-    <option value="date-asc">Date: Oldest first</option>
-    <option value="name-asc">Name: A-Z</option>
-    <option value="name-desc">Name: Z-A</option>
-  </Select>
-
-</div>
+    <Select 
+      value={sortBy} 
+      onChange={(e) => setSortBy(e.target.value)} 
+      className="w-48"
+    >
+      <option value="date-desc">Date: Latest first</option>
+      <option value="date-asc">Date: Oldest first</option>
+      <option value="name-asc">Name: A-Z</option>
+      <option value="name-desc">Name: Z-A</option>
+    </Select>
+  </div>
+)}
       
       {sortedProjects.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 py-20 text-center animate-fade-in">
